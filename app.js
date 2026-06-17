@@ -16,7 +16,7 @@ const Review = require("./models/review.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const session = require("express-session");
-const MongoStore = require("connect-mongo");
+const MongoStore = require("connect-mongo").default;
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -53,7 +53,7 @@ const store = MongoStore.create({
   crypto: {
     secret: "mysupersecret",
   },
-  touchAfter: 24 * 3600, // seconds me (24 hours)
+  touchAfter: 24 * 3600,
 });
 
 store.on("error", (err) => {
