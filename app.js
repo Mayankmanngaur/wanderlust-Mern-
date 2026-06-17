@@ -48,12 +48,12 @@ main()
     console.log("error:", err);
   });
 
-const store = new MongoStore({
+const store = MongoStore.create({
   mongoUrl: dbUrl,
   crypto: {
     secret: "mysupersecret",
   },
-  touchAfter: 24 * 3600, // seconds me
+  touchAfter: 24 * 3600, // seconds me (24 hours)
 });
 
 store.on("error", (err) => {
@@ -63,7 +63,7 @@ store.on("error", (err) => {
 // Session Middleware
 app.use(
   session({
-    store: store, // 🔥 Store connect hona zaroori hai
+    store: store, // 🔥 Store ko session ke sath link kiya
     secret: "mysupersecret",
     resave: false,
     saveUninitialized: true,
@@ -74,7 +74,6 @@ app.use(
     },
   }),
 );
-
 app.use(flash());
 
 app.use(passport.initialize());
