@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-
+const MongoStore = require("connect-mongo");
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -24,7 +24,7 @@ const userRouter = require("./routes/user.js");
 const { isLoggedin } = require("./middleware.js");
 
 // Environment variable se URL uthana
-const dbUrl = process.env.ATLASDB_URL;
+const dbUrl = process.env.ATLASDB_URL || "mongodb://127.0.0.1:27017/wanderlust";
 
 // View engine aur static files ka path fix kiya (Vercel standard)
 app.set("view engine", "ejs");
@@ -47,6 +47,17 @@ main()
     console.log("error:", err);
   });
 
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: "mysupersecret",
+  },
+  touchAfter: 24 * 3600, // 24 ghante me ek baar session update hoga (unnecessary DB calls bachane ke liye)
+});
+
+store.on("error", () => {
+  console.log("ERROR IN MONGO SESSION STORE", err);
+});
 app.use(
   session({
     secret: "mysupersecret",
@@ -74,23 +85,6 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   res.locals.user = req.user;
   next();
-});
-
-// 🔥 Vercel ke liye Database Connection Middleware (Routes chalne se pehle check karega)
-app.use(async (req, res, next) => {
-  if (mongoose.connection.readyState !== 1) {
-    try {
-      await mongoose.connect(dbUrl);
-      console.log("Connected to MongoDB Atlas via Middleware");
-    } catch (err) {
-      return next(err);
-    }
-  }
-  next();
-});
-
-app.get("/", (req, res) => {
-  res.redirect("/listings");
 });
 
 // App Routes
