@@ -89,7 +89,9 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
-
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
 // App Routes
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
@@ -106,10 +108,11 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+  console.error(err); // 👈 poora error print hoga
+
   let { statusCode = 500, message = "Something went wrong!" } = err;
   res.status(statusCode).render("listings/error.ejs", { message });
 });
-
 const port = process.env.PORT || 8080;
 
 app.listen(port, () => {

@@ -1,6 +1,8 @@
 const Listing = require("../models/listing.js");
 
 module.exports.index = async (req, res) => {
+  console.log("Home route hit");
+
   let listings = await Listing.find({});
   res.render("listings/home", { listings });
 };
