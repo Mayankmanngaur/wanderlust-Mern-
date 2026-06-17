@@ -92,6 +92,9 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
   res.redirect("/listings");
 });
+app.get("/favicon.ico", (req, res) => {
+  res.status(204).end();
+});
 // App Routes
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
