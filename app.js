@@ -16,7 +16,7 @@ const Review = require("./models/review.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const session = require("express-session");
-const MongoStore = require("connect-mongo")(session);
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -49,16 +49,21 @@ main()
   });
 
 const store = new MongoStore({
-  url: dbUrl, // Yahan mongoUrl ki jagah sirf 'url' likhna
-  secret: "mysupersecret",
-  touchAfter: 24 * 3600,
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: "mysupersecret",
+  },
+  touchAfter: 24 * 3600, // seconds me
 });
 
 store.on("error", (err) => {
   console.log("ERROR IN MONGO SESSION STORE", err);
 });
+
+// Session Middleware
 app.use(
   session({
+    store: store, // 🔥 Store connect hona zaroori hai
     secret: "mysupersecret",
     resave: false,
     saveUninitialized: true,
