@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-const MongoStore = require("connect-mongo");
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -16,6 +16,7 @@ const Review = require("./models/review.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -47,15 +48,13 @@ main()
     console.log("error:", err);
   });
 
-const store = MongoStore.create({
-  mongoUrl: dbUrl,
-  crypto: {
-    secret: "mysupersecret",
-  },
-  touchAfter: 24 * 3600, // 24 ghante me ek baar session update hoga (unnecessary DB calls bachane ke liye)
+const store = new MongoStore({
+  url: dbUrl, // Yahan mongoUrl ki jagah sirf 'url' likhna
+  secret: "mysupersecret",
+  touchAfter: 24 * 3600,
 });
 
-store.on("error", () => {
+store.on("error", (err) => {
   console.log("ERROR IN MONGO SESSION STORE", err);
 });
 app.use(
