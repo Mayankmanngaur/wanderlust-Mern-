@@ -1,0 +1,58 @@
+.navbar {
+  /* height: 5rem; */
+  background-color: white;
+}
+.fa-compass {
+  color: #fe424d;
+  font-size: 2.5rem;
+}
+.nav-link {
+  color: #222222;
+}
+.f-info {
+  height: 10rem;
+  background-color: #ebebeb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.f-info-socials {
+  width: 7rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.fa-brands {
+  font-size: 1.4rem;
+}
+.f-info-links {
+  width: 8rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.f-info-brand {
+  font-size: 1.1rem;
+}
+.f-info-links a {
+  color: #222222;
+}
+.card-text {
+  color: #222222;
+}
+.list a {
+  text-decoration: none;
+}
+
+.custom-card {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  transition: 0.3s ease;
+}
+
+.custom-card:hover {
+  box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}

@@ -1,0 +1,125 @@
+<% layout("/layouts/boilerplate") -%>
+
+<style>
+  /* Custom Focus Ring aur Input Highlights - Brand Color: #fe424d */
+  .login-input:focus {
+    border-color: #fe424d !important;
+    box-shadow: 0 0 0 0.25rem rgba(254, 66, 77, 0.25) !important;
+  }
+
+  /* Custom Brand Button */
+  .btn-login-custom {
+    background-color: #fe424d !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    border: none;
+    padding: 11px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-login-custom:hover {
+    background-color: #e0323c !important; /* Hover par thoda dark shade */
+    color: #ffffff !important;
+  }
+
+  /* Form Card Styling */
+  .login-card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Link Styling */
+  .signup-link {
+    color: #fe424d;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .signup-link:hover {
+    color: #e0323c;
+    text-decoration: underline;
+  }
+</style>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-11 col-md-6 col-lg-5">
+      <div class="card login-card p-4 p-sm-5 bg-white">
+        <div class="card-body">
+          <h2 class="card-title fw-bold mb-2 text-center" style="color: #222">
+            Welcome Back
+          </h2>
+          <p class="text-muted text-center mb-4" style="font-size: 0.95rem">
+            Log in to continue your journey
+          </p>
+
+          <form
+            action="/login"
+            method="POST"
+            novalidate
+            class="needs-validation"
+          >
+            <div class="mb-3">
+              <label
+                for="username"
+                class="form-label fw-semibold text-secondary"
+                >Username</label
+              >
+              <div class="input-group">
+                <span class="input-group-text bg-light text-muted border-end-0"
+                  ><i class="bi bi-person-fill"></i
+                ></span>
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  class="form-control login-input border-start-0 bg-light"
+                  placeholder="Enter your username"
+                  required
+                />
+                <div class="invalid-feedback">Please enter your username.</div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="password"
+                class="form-label fw-semibold text-secondary"
+                >Password</label
+              >
+              <div class="input-group">
+                <span class="input-group-text bg-light text-muted border-end-0"
+                  ><i class="bi bi-lock-fill"></i
+                ></span>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  class="form-control login-input border-start-0 bg-light"
+                  placeholder="Enter your password"
+                  required
+                />
+                <div class="invalid-feedback">Please enter your password.</div>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button class="btn btn-login-custom rounded-pill btn-lg fs-6">
+                Log In
+              </button>
+            </div>
+          </form>
+
+          <div class="text-center mt-4">
+            <span class="text-muted" style="font-size: 0.9rem"
+              >Don't have an account?</span
+            >
+            <a href="/signup" class="signup-link ms-1" style="font-size: 0.9rem"
+              >Sign Up</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

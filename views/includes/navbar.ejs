@@ -1,0 +1,111 @@
+<style>
+  /* Custom Navbar Styling */
+  .custom-navbar {
+    background-color: #ffffff !important;
+    padding: 0.8rem 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  /* Logo Font aur Icon Style */
+  .navbar-brand {
+    color: #fe424d !important;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .navbar-brand i {
+    font-size: 1.6rem;
+    vertical-align: middle;
+  }
+
+  /* Nav Links Layout & Hover effects */
+  .custom-navbar .nav-link {
+    color: #444444 !important;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem !important;
+    transition: color 0.2s ease-in-out;
+  }
+
+  .custom-navbar .nav-link:hover,
+  .custom-navbar .nav-link.active {
+    color: #fe424d !important;
+  }
+
+  /* Custom Signup/Login Buttons Styling */
+  .btn-nav-signup {
+    background-color: #fe424d !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    border-radius: 20px;
+    padding: 0.4rem 1.2rem !important;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-nav-signup:hover {
+    background-color: #e0323c !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(254, 66, 77, 0.2);
+  }
+
+  /* Mobile Toggler Custom Color */
+  .navbar-toggler {
+    border-color: rgba(0, 0, 0, 0.05) !important;
+  }
+  .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.25rem rgba(254, 66, 77, 0.15) !important;
+  }
+</style>
+
+<nav class="navbar navbar-expand-md custom-navbar border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="/listings">
+      <i class="fa-regular fa-compass"></i>
+      <span>wanderlust</span>
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNavbarContent"
+      aria-controls="mainNavbarContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNavbarContent">
+      
+      <ul class="navbar-nav me-auto mb-2 mb-md-0 gap-1">
+        <li class="nav-item">
+          <a class="nav-link" href="/listings">All Listings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/listings/new">Add New Listing</a>
+        </li>
+      </ul>
+      
+      <ul class="navbar-nav ms-auto align-items-md-center gap-2 mt-2 mt-md-0">
+        
+        <% if(!user) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn-nav-signup" href="/signup">Sign Up</a>
+          </li>
+        <% } %>
+
+        <% if(user) { %>
+          <li class="nav-item">
+            <a class="nav-link text-muted" style="font-size: 0.9rem" href="/logout">Log Out</a>
+          </li>
+        <% } %>
+
+      </ul>
+
+    </div>
+  </div>
+</nav>

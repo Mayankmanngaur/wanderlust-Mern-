@@ -1,0 +1,158 @@
+<%layout("/layouts/boilerplate")-%>
+
+<style>
+  /* Custom styles sirf is page ke elements ke liye taaki navbar/footer safe rahe */
+  .custom-listing-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Aapka primary brand color #fe424d */
+  .btn-custom {
+    background-color: #fe424d;
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    padding: 12px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-custom:hover {
+    background-color: #e0323c; /* Thoda dark shade hover par */
+    color: #ffffff;
+  }
+
+  /* Input focus karne par aapka color chamkega */
+  .form-control:focus {
+    border-color: #fe424d;
+    box-shadow: 0 0 0 0.25rem rgba(254, 66, 77, 0.25);
+  }
+</style>
+
+<body>
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card custom-listing-card p-4 p-sm-5">
+          <h1
+            class="text-center mb-4 fw-bold text-capitalize"
+            style="color: #333; font-size: 1.8rem"
+          >
+            Create a New Listing
+          </h1>
+
+          <form
+            method="POST"
+            action="/listings"
+            novalidate
+            class="needs-validation"
+          >
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-secondary">Title</label>
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                placeholder="Enter title"
+                name="title"
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please choose a username.</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-secondary"
+                >Description</label
+              >
+              <textarea
+                class="form-control"
+                placeholder="Enter detailed description"
+                name="description"
+                rows="4"
+                minlength="10"
+                required
+              ></textarea>
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">
+                Description should be atleast 10 characters
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-secondary"
+                >Image URL</label
+              >
+              <input
+                type="url"
+                class="form-control"
+                placeholder="https://example.com/image.jpg"
+                name="image"
+              />
+              <div class="invalid-feedback">
+                Please type valid url OR leave the url empty..
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-secondary">Price</label>
+              <div class="input-group">
+                <span class="input-group-text">₹</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Enter price"
+                  name="price"
+                  required
+                />
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please choose a price.</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6 mb-3">
+                <label class="form-label fw-semibold text-secondary"
+                  >Location</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="e.g. New Delhi"
+                  name="location"
+                  required
+                />
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">
+                  Please provide a valid location..
+                </div>
+              </div>
+              <div class="col-sm-6 mb-3">
+                <label class="form-label fw-semibold text-secondary"
+                  >Country</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="e.g. India"
+                  name="country"
+                  required
+                />
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">
+                  Please provide a valid country..
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+              <button class="btn btn-custom btn-lg text-uppercase">
+                Add Listing
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

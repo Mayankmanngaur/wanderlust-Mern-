@@ -1,0 +1,149 @@
+<% layout("/layouts/boilerplate") -%>
+
+<style>
+  /* Custom Focus Ring aur Input Highlights - Brand Color: #fe424d */
+  .signup-input:focus {
+    border-color: #fe424d !important;
+    box-shadow: 0 0 0 0.25rem rgba(254, 66, 77, 0.25) !important;
+  }
+
+  /* Custom Brand Button */
+  .btn-signup-custom {
+    background-color: #fe424d !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    border: none;
+    padding: 11px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-signup-custom:hover {
+    background-color: #e0323c !important; /* Thoda sa dark shade hover par */
+    color: #ffffff !important;
+  }
+
+  /* Form Card Styling */
+  .signup-card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Link Styling */
+  .login-link {
+    color: #fe424d;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .login-link:hover {
+    color: #e0323c;
+    text-decoration: underline;
+  }
+</style>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-11 col-md-6 col-lg-5">
+      <div class="card signup-card p-4 p-sm-5 bg-white">
+        <div class="card-body">
+          <h2 class="card-title fw-bold mb-2 text-center" style="color: #222">
+            Create Account
+          </h2>
+          <p class="text-muted text-center mb-4" style="font-size: 0.95rem">
+            Join our community today
+          </p>
+
+          <form
+            action="/signup"
+            method="POST"
+            novalidate
+            class="needs-validation"
+          >
+            <div class="mb-3">
+              <label
+                for="username"
+                class="form-label fw-semibold text-secondary"
+                >Username</label
+              >
+              <div class="input-group">
+                <span class="input-group-text bg-light text-muted border-end-0"
+                  ><i class="bi bi-person-fill"></i
+                ></span>
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  class="form-control signup-input border-start-0 bg-light"
+                  placeholder="Enter username"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Please choose a unique username.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label fw-semibold text-secondary"
+                >Email Address</label
+              >
+              <div class="input-group">
+                <span class="input-group-text bg-light text-muted border-end-0"
+                  ><i class="bi bi-envelope-fill"></i
+                ></span>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  class="form-control signup-input border-start-0 bg-light"
+                  placeholder="name@example.com"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Please enter a valid email address.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="password"
+                class="form-label fw-semibold text-secondary"
+                >Password</label
+              >
+              <div class="input-group">
+                <span class="input-group-text bg-light text-muted border-end-0"
+                  ><i class="bi bi-lock-fill"></i
+                ></span>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  class="form-control signup-input border-start-0 bg-light"
+                  placeholder="Create a strong password"
+                  required
+                />
+                <div class="invalid-feedback">Please enter a password.</div>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button class="btn btn-signup-custom rounded-pill btn-lg fs-6">
+                Sign Up
+              </button>
+            </div>
+          </form>
+
+          <div class="text-center mt-4">
+            <span class="text-muted" style="font-size: 0.9rem"
+              >Already have an account?</span
+            >
+            <a href="/login" class="login-link ms-1" style="font-size: 0.9rem"
+              >Log In</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

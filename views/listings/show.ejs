@@ -1,0 +1,331 @@
+<% layout("/layouts/boilerplate") -%>
+
+<style>
+  /* Custom styles sirf is page ke liye taaki navbar/footer safe rahe */
+  .custom-detail-card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Image agar badiya se fit karni ho */
+  .detail-img {
+    height: 350px;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  /* Owner Badge Styling */
+  .owner-badge {
+    background-color: #fff5f5;
+    color: #444444;
+    border: 1px solid rgba(254, 66, 77, 0.15);
+    padding: 6px 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .owner-badge i {
+    color: #fe424d;
+    font-size: 1rem;
+  }
+
+  /* Edit Button - Aapka primary brand color #fe424d */
+  .btn-edit-custom {
+    background-color: #fe424d;
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    padding: 10px 24px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-edit-custom:hover {
+    background-color: #e0323c;
+    color: #ffffff;
+  }
+
+  /* Delete Button - Bootstrap ka outline secondary button text ke liye */
+  .btn-delete-custom {
+    border: 1.5px solid #6c757d;
+    color: #6c757d;
+    background-color: transparent;
+    font-weight: 500;
+    padding: 10px 24px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-delete-custom:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #ffffff;
+  }
+
+  /* Price tag styling */
+  .price-tag {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2b2b2b;
+  }
+
+  /* Responsive styling mobile ke liye */
+  @media (max-width: 576px) {
+    .detail-img {
+      height: 220px;
+    }
+    .action-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .action-buttons a,
+    .action-buttons form,
+    .action-buttons button {
+      width: 100%;
+    }
+    .owner-badge {
+      width: 100%; /* Mobile par full width ho jayega */
+      justify-content: center;
+    }
+  }
+
+  /* Review System Styling */
+  .review-card {
+    margin-top: 2rem;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  .star-rating {
+    direction: rtl;
+    display: inline-flex;
+  }
+
+  .star-rating input {
+    display: none;
+  }
+
+  .star-rating label {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .star-rating input:checked~label,
+  .star-rating label:hover,
+  .star-rating label:hover~label {
+    color: #ffc107;
+  }
+
+  .review-btn {
+    background-color: #fe424d;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    font-weight: 600;
+  }
+
+  .review-btn:hover {
+    background-color: #e0323c;
+    color: white;
+  }
+
+  /* Review Card Box & Delete Button Styling */
+  .single-review-box {
+    border-radius: 14px; 
+    background: #f8f9fa;
+    border: 1px solid rgba(0,0,0,0.03) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .single-review-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.04) !important;
+  }
+
+  /* Naya: Review Author text style */
+  .review-author {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 600;
+    background: #eaeaea;
+    padding: 3px 10px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .btn-review-delete {
+    background-color: transparent;
+    border: 1px solid #ced4da;
+    color: #6c757d;
+    padding: 5px 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .btn-review-delete:hover {
+    background-color: #fff5f5;
+    border-color: #dc3545;
+    color: #dc3545;
+  }
+</style>
+
+<body>
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-9 col-lg-7">
+
+        <div class="card custom-detail-card">
+          <% if(listing.image) { %>
+          <img src="<%= listing.image %>" class="card-img-top detail-img" alt="listing image">
+          <% } %>
+
+          <div class="card-body p-4 p-sm-5">
+            
+            <h1 class="card-title fw-bold mb-2 text-capitalize" style="color: #222; font-size: 2.2rem;">
+              <%= listing.title %>
+            </h1>
+
+            <div class="mb-3">
+              <span class="owner-badge rounded-pill">
+                <i class="bi bi-person-circle"></i>
+                <span>Owned by <strong class="text-dark"><%= listing.owner.username %></strong></span>
+              </span>
+            </div>
+
+            <div class="price-tag mb-4">
+              <span style="color: #fe424d;">&#8377;</span> <%= listing.price.toLocaleString("en-IN") %>
+            </div>
+
+            <div class="mb-4">
+              <h5 class="fw-semibold text-dark">About this listing</h5>
+              <p class="card-text text-muted" style="line-height: 1.6; font-size: 1.05rem;">
+                <%= listing.description %>
+              </p>
+            </div>
+
+            <hr class="text-muted my-4">
+
+            <div class="row text-secondary mb-4">
+              <div class="col-6">
+                <i class="bi bi-geo-alt-fill" style="color: #fe424d;"></i>
+                <span class="fw-semibold text-dark d-block d-sm-inline">Location:</span>
+                <%= listing.location %>
+              </div>
+              <div class="col-6">
+                <i class="bi bi-globe" style="color: #fe424d;"></i>
+                <span class="fw-semibold text-dark d-block d-sm-inline">Country:</span>
+                <%= listing.country %>
+              </div>
+            </div>
+
+            <% if (user && user._id.equals(listing.owner._id || listing.owner)){ %>
+            <div class="d-flex action-buttons gap-3 pt-2">
+              <a href="/listings/<%=listing._id%>/edit" class="btn btn-edit-custom rounded-pill text-center">
+                Edit Listing
+              </a>
+
+              <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE" class="m-0">
+                <button class="btn btn-delete-custom rounded-pill">
+                  Delete Listing
+                </button>
+              </form>
+            </div>
+            <% } %>
+          </div>
+        </div>
+
+        <% if(user) { %>
+        <div class="card review-card mt-4">
+          <div class="card-body p-4">
+            <h3 class="fw-bold mb-4">Leave a Review</h3>
+
+            <form method="POST" action="/listings/<%= listing._id %>/reviews" novalidate class="needs-validation">
+              <div class="mb-4">
+                <label class="form-label fw-semibold d-block mb-2">Rating</label>
+                <div class="star-rating">
+                  <input type="radio" name="review[rating]" id="star5" value="5">
+                  <label for="star5">★</label>
+
+                  <input type="radio" name="review[rating]" id="star4" value="4">
+                  <label for="star4">★</label>
+
+                  <input type="radio" name="review[rating]" id="star3" value="3" checked>
+                  <label for="star3">★</label>
+
+                  <input type="radio" name="review[rating]" id="star2" value="2">
+                  <label for="star2">★</label>
+
+                  <input type="radio" name="review[rating]" id="star1" value="1" required>
+                  <label for="star1">★</label>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Comment</label>
+                <textarea name="review[comment]" class="form-control" rows="4" placeholder="Share your experience..." required></textarea>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please choose a comment</div>
+              </div>
+
+              <button class="btn review-btn rounded-pill">Submit Review</button>
+            </form>
+          </div>
+        </div>
+        <% } %>
+
+        <% if (listing && listing.reviews && listing.reviews.length > 0) { %>
+        <hr class="my-5">
+        <h4 class="fw-bold mb-4">All Reviews</h4>
+        <div class="row">
+          <% for(let review of listing.reviews) { %>
+          <div class="col-md-6 mb-3">
+            <div class="card h-100 border-0 shadow-sm p-3 single-review-box">
+              <div class="card-body d-flex flex-column justify-content-between">
+                
+                <div>
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="card-title fw-bold text-warning m-0">
+                      <% for(let i=0; i<review.rating; i++) { %> ★ <% } %>
+                      <% for(let i=review.rating; i<5; i++) { %> ☆ <% } %>
+                    </h6>
+                    <% if(review.author && review.author.username) { %>
+                      <span class="review-author">
+                        <i class="bi bi-person"></i> @<%= review.author.username %>
+                      </span>
+                    <% } %>
+                  </div>
+                  
+                  <p class="card-text text-muted mb-4" style="font-size: 0.95rem; line-height: 1.5;">
+                    <%= review.comment %>
+                  </p>
+                </div>
+
+                <div class="d-flex justify-content-end align-items-center">
+                  <% if(user && review.author && user._id.equals(review.author._id || review.author)) { %>
+                    <form method="POST" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE" class="m-0">
+                      <button class="btn btn-review-delete rounded-pill btn-sm d-flex align-items-center gap-1">
+                        <i class="bi bi-trash3-fill" style="font-size: 0.85rem;"></i> Delete
+                      </button>
+                    </form>
+                  <% } %>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+        <% } %>
+
+      </div>
+    </div>
+  </div>
+</body>
