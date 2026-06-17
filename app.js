@@ -1,10 +1,9 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-const dbUrl = process.env.ATLASDB_URL;
+
 const express = require("express");
 const app = express();
-
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
@@ -24,18 +23,22 @@ const User = require("./models/user.js");
 const userRouter = require("./routes/user.js");
 const { isLoggedin } = require("./middleware.js");
 
+// Environment variable se URL uthana
+const dbUrl = process.env.ATLASDB_URL;
+
+// View engine aur static files ka path fix kiya (Vercel standard)
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "/views"));
+app.set("views", path.join(__dirname, "views"));
 app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.engine("ejs", ejsMate);
-app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, "public")));
 
+// Background connection (Local ke liye faster response)
 async function main() {
   await mongoose.connect(dbUrl);
 }
-
 main()
   .then(() => {
     console.log("connected to db");
@@ -73,6 +76,20 @@ app.use((req, res, next) => {
   next();
 });
 
+// 🔥 Vercel ke liye Database Connection Middleware (Routes chalne se pehle check karega)
+app.use(async (req, res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    try {
+      await mongoose.connect(dbUrl);
+      console.log("Connected to MongoDB Atlas via Middleware");
+    } catch (err) {
+      return next(err);
+    }
+  }
+  next();
+});
+
+// App Routes
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
@@ -85,6 +102,17 @@ app.get("/setcookie", (req, res) => {
 
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page Not Found"));
+});
+
+app.use((err, req, res, next) => {
+  let { statusCode = 500, message = "Something went wrong!" } = err;
+  res.status(statusCode).render("listings/error.ejs", { message });
+});
+
+const port = process.env.PORT || 8080;
+
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
 });
 
 app.use((err, req, res, next) => {
